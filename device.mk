@@ -18,9 +18,6 @@
 # device-specific aspects (drivers) with a device-agnostic
 # product configuration (apps).
 #
-# Inherit from those products. Most specific first.
-$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += device/htc/leo/overlay
@@ -31,21 +28,12 @@ PRODUCT_PACKAGES += \
 	lights.htcleo \
 	leo-reference-ril 
 
-# Vold
-PRODUCT_COPY_FILES += \
-	device/htc/leo/vold.fstab:system/etc/vold.fstab
-
 # Ramdisk
 PRODUCT_COPY_FILES += \
 	device/htc/leo/ramdisk/init.htcleo.rc:root/init.htcleo.rc \
 	device/htc/leo/ramdisk/init.htcleo.usb.rc:root/init.htcleo.usb.rc \
 	device/htc/leo/ramdisk/ueventd.htcleo.rc:root/ueventd.htcleo.rc \
 	device/htc/leo/ramdisk/logo.rle:root/logo.rle \
-
-# GSM APN list
-PRODUCT_COPY_FILES += \
-    vendor/slim/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml \
-    vendor/slim/prebuilt/common/etc/spn-conf.xml:system/etc/spn-conf.xml
 
 # GPS
 PRODUCT_COPY_FILES += \
@@ -88,16 +76,8 @@ PRODUCT_COPY_FILES += $(shell \
 PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml 
 
-# Leo uses high-density artwork where available
-PRODUCT_LOCALES += hdpi mdpi
-
 # QSD8K Commomn Stuff
 $(call inherit-product, device/htc/qsd8k-common/qsd8k.mk)
 
 # Vendor
 $(call inherit-product, vendor/htc/leo/leo-vendor.mk)
-
-# Discard inherited values and use our own instead.
-PRODUCT_NAME := full_leo
-PRODUCT_DEVICE := leo
-PRODUCT_MODEL := Full Android on leo
