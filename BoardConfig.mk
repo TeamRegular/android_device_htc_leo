@@ -64,6 +64,9 @@ BOARD_USE_LEGACY_TOUCHSCREEN := true
 LEGACY_RIL := true
 BOARD_USES_LEGACY_RIL := true
 
+# Bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/htc/htcleo/bluetooth
+
 # Hacks
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun0/file
 BOARD_USE_LEGACY_TRACKPAD := true
