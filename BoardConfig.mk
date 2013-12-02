@@ -43,7 +43,7 @@ BOARD_ADRENO_AVOID_EXTERNAL_TEXTURE := true
 COMMON_GLOBAL_CFLAGS    += -DREFRESH_RATE=60
 
 # Kernel directory
-TARGET_KERNEL_CONFIG    := htcleo_defconfig
+TARGET_KERNEL_CONFIG    := cyanogenmod_htcleo_defconfig
 TARGET_PREBUILT_KERNEL  := device/htc/leo/prebuilt/kernel
 
 # to enable the GPS HAL
