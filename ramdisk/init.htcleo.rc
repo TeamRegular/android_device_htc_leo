@@ -192,47 +192,34 @@ service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard0
     disabled
 
 service wpa_supplicant /system/bin/wpa_supplicant \
-    -Dwext -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
-#   we will start as root and wpa_supplicant will switch to user wifi
-#   after setting up the capabilities required for WEXT
-#   user wifi
-#   group wifi inet keystore
+    -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -O/data/misc/wifi/sockets -e/data/misc/wifi/entropy.bin -g@android:wpa_wlan0
+    #   we will start as root and wpa_supplicant will switch to user wifi
+    #   after setting up the capabilities required for WEXT
+    #   user wifi
+    #   group wifi inet keystore
     class main
-    socket wpa_wlan0 dgram 0660 wifi wifi
+    socket wpa_wlan0 dgram 660 wifi wifi
     disabled
     oneshot
 
-# DHCPCD
-# wi-fi
-service dhcpcd_wlan0 /system/bin/dhcpcd -ABKL
+service dhcpcd_wlan0 /system/bin/dhcpcd -aABKL
     class main
     disabled
     oneshot
 
-# bluetooth
-service dhcpcd_bnep0 /system/bin/dhcpcd -ABKL
+service dhcpcd_bt-pan /system/bin/dhcpcd -ABKL
     class main
     disabled
     oneshot
 
-# IP Renew
-# wi-fi
 service iprenew_wlan0 /system/bin/dhcpcd -n
     class main
     disabled
     oneshot
 
-# bluetooth
-service iprenew_bnep0 /system/bin/dhcpcd -n
+service iprenew_bt-pan /system/bin/dhcpcd -n
     class main
     disabled
     oneshot
-
-# bugreport is triggered by holding down volume down, volume up and power
-service bugreport /system/bin/dumpstate -d -v -o /sdcard/bugreports/bugreport
-    class main
-    disabled
-    oneshot
-    keycodes 114 115 116
 
 service dspcrashd /system/bin/dspcrashd
