@@ -1,0 +1,4 @@
+#!/system/bin/sh
+
+chmod 0333 /sys/class/leds/button-backlight/brightness
+echo 0 > /sys/class/leds/button-backlight/brightness

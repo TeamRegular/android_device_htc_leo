@@ -1,0 +1,17 @@
+#!/system/bin/sh
+# Fix the video playing issue of YouTube v5.x for legacy devices
+# HWUI framework patch is requird
+
+DIR=/data/local/hwui.deny
+if [ ! -d $DIR ]; then
+  mkdir $DIR  
+  chmod 0755 $DIR
+  chown system.system $DIR
+fi
+
+File=/data/local/hwui.deny/com.google.android.youtube
+if [ ! -f $File ]; then
+  touch $File
+  chmod 0600 $File
+  chown system.system $File
+fi

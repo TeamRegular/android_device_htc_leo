@@ -1,0 +1,22 @@
+#!/system/bin/sh
+
+# for mobile network (3G, HSDPA)
+if [ ! -f /system/ppp ]; then
+  insmod /system/lib/modules/msm_rmnet.ko
+fi
+
+# for VPN
+if [ -f /system/lib/modules/tun.ko ]; then
+  insmod /system/lib/modules/tun.ko
+fi
+
+# for Filesystem in Userspace (FUSE)
+if [ -f /system/lib/modules/fuse.ko ]; then
+  insmod /system/lib/modules/fuse.ko
+fi
+
+# for WiFi Calling
+#if [ -f /system/lib/modules/kineto_gan.ko ]; then
+#  insmod /system/lib/modules/kineto_gan.ko
+#fi
+
