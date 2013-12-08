@@ -1,14 +1,20 @@
 import init.htcleo.usb.rc
 
+on init
+
+    export EXTERNAL_STORAGE /storage/sdcard0
+
+    mkdir /mnt/media_rw/sdcard0 0700 media_rw media_rw
+    mkdir /storage/sdcard0 0700 root root
+    symlink /storage/sdcard0 /sdcard
+    symlink /storage/sdcard0 /mnt/sdcard
+
 on boot
     mount debugfs /sys/kernel/debug /sys/kernel/debug
 
 on fs
-    export EXTERNAL_STORAGE /storage/sdcard0
-    mkdir /storage 0777 system sdcard_r
-    mkdir /storage/sdcard0 0000 system system
-    symlink /storage/sdcard0 /sdcard
-    symlink /storage/sdcard0 /mnt/sdcard
+   
+    mount_all /fstab.htcleo
 
     # bluetooth power up/down interface
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
@@ -176,6 +182,10 @@ service akmd /system/bin/akmd
 
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
+
+service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard0 /storage/sdcard0
+    class late_start
+    disabled
 
 service wpa_supplicant /system/bin/wpa_supplicant \
     -Dwext -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
